@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="005-1-create-users" author="mean">
+        <createSequence
+                sequenceName="users_seq"
+                startValue="1"
+                incrementBy="50"/>
+    </changeSet>
+
+    <changeSet id="005-create-users-table" author="mean">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="users"/>
+            </not>
+        </preConditions>
+        <createTable tableName="users">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="005-2-insert-users" author="mean">
+        <insert tableName="users">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Admin User"/>
+            <column name="email" value="admin@gmail.com"/>
+            <!-- BCrypt hash of "admin123" -->
+            <column name="password" value="$2a$10$xQVDEkQYfnUBFnJpT1cR1OqXuKKvKvBhRjPpDjPvZpBhLxJKvJQZy"/>
+            <column name="role" value="ADMIN"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="thida"/>
+            <column name="email" value="user@gmail.com"/>
+            <!-- BCrypt hash of "user123" -->
+            <column name="password" value="$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy"/>
+            <column name="role" value="USER"/>
+        </insert>
+    </changeSet>
+    <!-- Add index on email for faster lookups -->
+    <changeSet id="005-3-add-users-email-index" author="mean">
+        <createIndex tableName="users" indexName="idx_users_email">
+            <column name="email"/>
+        </createIndex>
+    </changeSet>
+    <!-- Update sequence -->
+    <changeSet id="018-sync-users-sequence" author="sokmean">
+        <sql>
+            SELECT setval('users_seq', (SELECT MAX(id) FROM users) + 1, false);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

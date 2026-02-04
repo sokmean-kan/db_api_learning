@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <!-- ========================================== -->
+    <!-- Insert Sample Units                        -->
+    <!-- ========================================== -->
+    <changeSet id="06-insert-sample-units" author="sokmean">
+        <insert tableName="units">
+            <column name="id" valueNumeric="1"/>  <!-- Explicit ID -->
+            <column name="name" value="Piece"/>
+        </insert>
+
+        <insert tableName="units">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Kilogram"/>
+        </insert>
+
+        <insert tableName="units">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Liter"/>
+        </insert>
+
+        <insert tableName="units">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Box"/>
+        </insert>
+
+        <insert tableName="units">
+            <column name="id" valueNumeric="5"/>
+            <column name="name" value="Pack"/>
+        </insert>
+    </changeSet>
+
+    <!-- ========================================== -->
+    <!-- Insert Sample Categories                   -->
+    <!-- ========================================== -->
+    <changeSet id="07-insert-sample-categories" author="sokmean">
+        <insert tableName="categories">
+            <column name="id" valueNumeric="1"/>  <!-- Explicit ID -->
+            <column name="name" value="Electronics"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Food &amp; Beverages"/>  <!-- Fixed & -->
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Clothing"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Home &amp; Garden"/>  <!-- Fixed & -->
+        </insert>
+    </changeSet>
+
+    <!-- ========================================== -->
+    <!-- Insert Sample Products                     -->
+    <!-- ========================================== -->
+    <changeSet id="08-insert-sample-products" author="sokmean">
+        <!-- Electronics -->
+        <insert tableName="products">
+            <column name="id" valueNumeric="1"/>  <!-- Explicit ID -->
+            <column name="name" value="Laptop HP Pavilion"/>
+            <column name="price" valueNumeric="899.99"/>
+            <column name="stock" valueNumeric="15"/>
+            <column name="unit_id" valueNumeric="1"/>  <!-- Piece -->
+            <column name="category_id" valueNumeric="1"/>  <!-- Electronics -->
+            <column name="created_at" valueDate="2026-01-03T10:00:00"/>
+            <column name="updated_at" valueDate="2026-01-10T10:00:00"/>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Wireless Mouse"/>
+            <column name="price" valueNumeric="25.50"/>
+            <column name="stock" valueNumeric="50"/>
+            <column name="unit_id" valueNumeric="1"/>  <!-- Piece -->
+            <column name="category_id" valueNumeric="1"/>  <!-- Electronics -->
+            <column name="created_at" valueDate="2026-01-01T10:00:00"/>
+            <column name="updated_at" valueDate="2026-01-10T10:00:00"/>
+        </insert>
+
+        <!-- Food & Beverages -->
+        <insert tableName="products">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Jasmine Rice"/>
+            <column name="price" valueNumeric="3.50"/>
+            <column name="stock" valueNumeric="200"/>
+            <column name="unit_id" valueNumeric="2"/>  <!-- Kilogram -->
+            <column name="category_id" valueNumeric="2"/>  <!-- Food -->
+            <column name="created_at" valueDate="2026-01-09T10:00:00"/>
+            <column name="updated_at" valueDate="2026-01-10T10:00:00"/>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Orange Juice"/>
+            <column name="price" valueNumeric="4.99"/>
+            <column name="stock" valueNumeric="80"/>
+            <column name="unit_id" valueNumeric="3"/>  <!-- Liter -->
+            <column name="category_id" valueNumeric="2"/>  <!-- Food -->
+            <column name="created_at" valueDate="2026-01-02T10:00:00"/>
+            <column name="updated_at" valueDate="2026-01-10T10:00:00"/>
+        </insert>
+
+        <!-- Clothing -->
+        <insert tableName="products">
+            <column name="id" valueNumeric="5"/>
+            <column name="name" value="Cotton T-Shirt"/>
+            <column name="price" valueNumeric="19.99"/>
+            <column name="stock" valueNumeric="100"/>
+            <column name="unit_id" valueNumeric="1"/>  <!-- Piece -->
+            <column name="category_id" valueNumeric="3"/>  <!-- Clothing -->
+            <column name="created_at" valueDate="2026-01-04T10:00:00"/>
+            <column name="updated_at" valueDate="2026-01-10T10:00:00"/>
+        </insert>
+    </changeSet>
+
+    <!-- ========================================== -->
+    <!-- Insert Sample Sales                        -->
+    <!-- ========================================== -->
+    <changeSet id="09-insert-sample-sales" author="sokmean">
+        <insert tableName="sales">
+            <column name="id" valueNumeric="1"/>  <!-- Explicit ID -->
+            <column name="create_at" valueDate="2026-01-08T10:00:00"/>  <!-- Fixed year -->
+            <column name="status" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="sales">
+            <column name="id" valueNumeric="2"/>
+            <column name="create_at" valueDate="2026-01-09T10:00:00"/>  <!-- Fixed year -->
+            <column name="status" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+
+    <!-- ========================================== -->
+    <!-- Insert Sample Sales Details                -->
+    <!-- ========================================== -->
+    <changeSet id="10-insert-sample-sales-detail" author="sokmean">
+        <!-- Details for Sale #1 -->
+        <insert tableName="sale_details">
+            <column name="id" valueNumeric="1"/>  <!-- Explicit ID -->
+            <column name="sale_id" valueNumeric="1"/>
+            <column name="product_id" valueNumeric="1"/>  <!-- Laptop -->
+            <column name="qty" valueNumeric="1"/>
+            <column name="unit_price" valueNumeric="899.99"/>
+            <column name="total_price" valueNumeric="899.99"/>
+        </insert>
+
+        <insert tableName="sale_details">
+            <column name="id" valueNumeric="2"/>
+            <column name="sale_id" valueNumeric="1"/>
+            <column name="product_id" valueNumeric="2"/>  <!-- Mouse -->
+            <column name="qty" valueNumeric="1"/>
+            <column name="unit_price" valueNumeric="25.50"/>
+            <column name="total_price" valueNumeric="25.50"/>
+        </insert>
+
+        <!-- Details for Sale #2 -->
+        <insert tableName="sale_details">
+            <column name="id" valueNumeric="3"/>
+            <column name="sale_id" valueNumeric="2"/>
+            <column name="product_id" valueNumeric="5"/>  <!-- T-Shirt -->
+            <column name="qty" valueNumeric="1"/>
+            <column name="unit_price" valueNumeric="19.99"/>
+            <column name="total_price" valueNumeric="19.99"/>
+        </insert>
+
+        <insert tableName="sale_details">
+            <column name="id" valueNumeric="4"/>
+            <column name="sale_id" valueNumeric="2"/>
+            <column name="product_id" valueNumeric="4"/>  <!-- Orange Juice -->
+            <column name="qty" valueNumeric="1"/>
+            <column name="unit_price" valueNumeric="4.99"/>
+            <column name="total_price" valueNumeric="4.99"/>
+        </insert>
+    </changeSet>
+
+    <!-- ========================================== -->
+    <!-- Update Sequence Values                     -->
+    <!-- ========================================== -->
+    <changeSet id="011-sync-sequences" author="sokmean-sequences">
+        <sql>
+            -- Units: Last ID = 3, so next should be 4
+            SELECT setval('units_seq', (SELECT MAX(id) FROM units) + 1, false);
+
+            -- Categories: Last ID = 3, so next should be 4
+            SELECT setval('categories_seq', (SELECT MAX(id) FROM categories) + 1, false);
+
+            -- Products: Last ID = 5, so next should be 6
+            SELECT setval('products_seq', (SELECT MAX(id) FROM products) + 1, false);
+
+            SELECT setval('sales_seq', (SELECT MAX(id) FROM sales) + 1, false);
+
+            SELECT setval('sale_details_seq', (SELECT MAX(id) FROM sale_details) + 1, false);
+
+
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>

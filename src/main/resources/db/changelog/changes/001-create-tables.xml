@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <!-- Categories -->
+    <changeSet id="001-1-create-categories-sequence" author="sokmean">
+        <createSequence
+                sequenceName="categories_seq"
+                startValue="1"
+                incrementBy="20"/>
+    </changeSet>
+
+    <changeSet id="001-create-categories-table" author="sokmean">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="categories"/>
+            </not>
+        </preConditions>
+        <createTable tableName="categories">
+            <column name="id" type="BIGINT">  <!-- Changed from INT to BIGINT -->
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Units -->
+    <changeSet id="002-1-create-units-sequence" author="sokmean">
+        <createSequence
+                sequenceName="units_seq"
+                startValue="1"
+                incrementBy="20"/>
+    </changeSet>
+
+    <changeSet id="002-create-units-table" author="sokmean">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="units"/>
+            </not>
+        </preConditions>
+        <createTable tableName="units">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Products -->
+    <changeSet id="003-1-create-products-sequence" author="sokmean">
+        <createSequence
+                sequenceName="products_seq"
+                startValue="1"
+                incrementBy="50"/>
+    </changeSet>
+
+    <changeSet id="003-create-products-table" author="sokmean">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="products"/>
+            </not>
+        </preConditions>
+        <createTable tableName="products">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stock" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="BIGINT"/>
+            <column name="unit_id" type="BIGINT"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Add Foreign Keys for Products -->
+    <changeSet id="003-2-add-products-foreign-keys" author="sokmean">
+        <addForeignKeyConstraint
+                baseTableName="products"
+                baseColumnNames="category_id"
+                referencedTableName="categories"
+                referencedColumnNames="id"
+                constraintName="fk_products_category"
+                onDelete="SET NULL"/>
+
+        <addForeignKeyConstraint
+                baseTableName="products"
+                baseColumnNames="unit_id"
+                referencedTableName="units"
+                referencedColumnNames="id"
+                constraintName="fk_products_unit"
+                onDelete="SET NULL"/>
+    </changeSet>
+
+    <!-- Sales -->
+    <changeSet id="004-1-create-sales-sequence" author="sokmean">
+        <createSequence
+                sequenceName="sales_seq"
+                startValue="1"
+                incrementBy="50"/>
+    </changeSet>
+
+    <changeSet id="004-create-sales-table" author="sokmean">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="sales"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sales">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="create_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Sale Details -->
+    <changeSet id="005-1-create-sale-details-sequence" author="sokmean">
+        <createSequence
+                sequenceName="sale_details_seq"
+                startValue="1"
+                incrementBy="50"/>
+    </changeSet>
+
+    <changeSet id="005-create-sale-details-table" author="sokmean">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="sale_details"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sale_details">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="sale_id" type="BIGINT"/>
+            <column name="product_id" type="BIGINT"/>
+            <column name="qty" type="INT"/>
+            <column name="unit_price" type="DECIMAL(12,2)"/>
+            <column name="total_price" type="DECIMAL(14,2)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Add Foreign Keys for Sale Details -->
+    <changeSet id="005-2-add-sale-details-foreign-keys" author="sokmean">
+        <addForeignKeyConstraint
+                baseTableName="sale_details"
+                baseColumnNames="sale_id"
+                referencedTableName="sales"
+                referencedColumnNames="id"
+                constraintName="fk_sale_details_sale"
+                onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="sale_details"
+                baseColumnNames="product_id"
+                referencedTableName="products"
+                referencedColumnNames="id"
+                constraintName="fk_sale_details_product"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>
