@@ -65,7 +65,7 @@ class SecurityConfiguration(
                     .logoutSuccessHandler { _, response, _ ->
                         response.status = 200
                         println("response status=> ${response.status}")
-                        sendErrorResponses(response,"Logged out successfully")
+                        sendErrorResponses(response,"Logout successfully")
                     }
             }
         return http.build()
