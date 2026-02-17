@@ -74,11 +74,8 @@ class SecurityConfiguration(
     private fun sendErrorResponses(response: HttpServletResponse, message: String) {
         response.status = 200
         response.contentType = "application/json;charset=UTF-8"
-        val json = """"
-                {
-                    "status": ${response.status},
-                    "message": "$message"
-                }
+        val json = """
+                {"status": ${response.status},"message": "$message"}
             """.trimIndent()
 
         response.writer.write(json)
