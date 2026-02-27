@@ -10,6 +10,7 @@
     <include file="db/changelog/changes/003-sample-data.xml"/>
     <include file="db/changelog/changes/004-rename-column.xml"/>
     <include file="db/changelog/changes/005-add-table-user.xml"/>
+    <include file="db/changelog/changes/006-add-table-login_attempts.xml"/>
 
 </databaseChangeLog>
 
