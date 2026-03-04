@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
 
 @Service
-class TokenBlacklistService {
+object TokenBlacklistService {
     // A thread-safe set to store blacklisted tokens
     private val blacklistedTokens = ConcurrentHashMap.newKeySet<String>()
 
