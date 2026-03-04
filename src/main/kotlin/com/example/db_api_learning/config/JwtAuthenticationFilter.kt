@@ -64,7 +64,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 class JwtAuthenticationFilter(
     private val userDetailService: CustomUserDetailService,
     private val tokenService: TokenService,
-    private val tokenBlacklistService: TokenBlacklistService
+//    private val tokenBlacklistService: TokenBlacklistService
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
@@ -80,7 +80,7 @@ class JwtAuthenticationFilter(
         }
         ////////////check if token was logout(in blacklist)
         val jwt = authHeader.substring("Bearer ".length)
-        if (tokenBlacklistService.isBlacklisted(jwt)) {
+        if (TokenBlacklistService.isBlacklisted(jwt)) {
             println("DEBUG: Rejected blacklisted token")
             response.status = HttpServletResponse.SC_UNAUTHORIZED
             return sendErrorResponse(response, "Token is invalidated. Please login again.")

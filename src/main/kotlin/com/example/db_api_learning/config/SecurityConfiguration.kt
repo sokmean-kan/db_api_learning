@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 class SecurityConfiguration(
     private val authenticationProvider: AuthenticationProvider,
-    private val tokenBlacklistService: TokenBlacklistService
+//    private val tokenBlacklistService: TokenBlacklistService
 
 ) {
     @Bean
@@ -57,7 +57,7 @@ class SecurityConfiguration(
                         if (authHeader != null && authHeader.startsWith("Bearer ")) {
                             val jwt = authHeader.substring(7)
                             println("DEBUG: Blacklisting token: ${jwt.take(10)}...")
-                            tokenBlacklistService.blacklistToken(jwt)
+                            TokenBlacklistService.blacklistToken(jwt)
                         } else {
                             println("DEBUG: Logout failed - No Bearer token found in header")
                         }
